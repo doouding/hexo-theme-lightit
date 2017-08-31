@@ -1,0 +1,162 @@
+<h1 class="title"><%= config.title %></h1>
+<h2 class="subtitle">
+  <span id="blinkSubtitle"></span>
+</h2>
+<script>
+  (function(){
+    var titles = JSON.parse('<%- JSON.stringify(theme.subtitle) %>')
+    var blinkTitle = document.getElementById('blinkSubtitle')
+    var typeSpeed = 120
+    var delSpeed = 50
+
+    function textGenerater(str) {
+      function typeText(s) {
+        var index = 1
+        var length = s.length
+
+        return function () {
+
+          return {
+            done: index === length,
+            str: s.slice(0, index++)
+          }
+        }
+      }
+
+      function delText(s) {
+        var index = s.length
+
+        return function () {
+          return {
+            done: index === 0,
+            str: s.slice(0, index--)
+          }
+        }
+      }
+      
+      return {
+        'type': typeText(str),
+        'del': delText(str)
+      }
+    }
+
+    function textChange(i) {
+      var tg = textGenerater(titles[i])
+      var intervalID
+      
+      function showTxt () {
+        var t = tg['type']()
+        blinkTitle.innerHTML = t.str
+        
+        if (t.done) {
+          clearInterval(intervalID)
+          setTimeout(function(){
+            intervalID = setInterval(delTxt, delSpeed)
+          }, 1000)
+        }
+      }
+
+      function delTxt () {
+        var t = tg['del']()
+        blinkTitle.innerHTML = t.str
+
+        if (t.done) {
+          clearInterval(intervalID)
+          textChange((i + 1) % titles.length)
+        }
+      }
+
+      intervalID = setInterval(showTxt, typeSpeed)
+    }
+
+    textChange(0)
+  }())
+</script>
+<div class="societies">
+  <% if (theme.weibo) { 
+      let weiboURL = 'https://weibo.com/'
+
+      if (isNaN(Number(theme.weibo))) {
+        weiboURL += theme.weibo
+      } else {
+        weiboURL += ('u/' + theme.weibo)
+      }
+    %>
+    <a class="iconfont social" href="<%= weiboURL %>" target="_blank">&#xe6c8;</a>
+  <% } %>
+  <% if (theme.twitter) { %>
+    <a class="iconfont social" href="<%= 'https://twitter.com/' + theme.twitter %>" target="_blank">&#xe638;</a>
+  <% } %>
+  <% if (theme.ins) { %>
+    <a class="iconfont social" href="<%= 'https://www.instagram.com/' + theme.ins %>" target="_blank">&#xe83d;</a>
+  <% } %>
+  <% if (theme.github) { %>
+    <a class="iconfont social" href="<%= 'https://github.com/' + theme.github %>" target="_blank">&#xe605;</a>
+  <% } %>
+  <% if (theme.dribbble) { %>
+    <a class="iconfont social" href="<%= 'https://dribbble.com/' + theme.dribbble %>" target="_blank">&#xe6b2;</a>
+  <% } %>
+</div>
+<div class="posts">
+  <div class="post-list" id="postList"></div>
+  <div class="post-page">
+    <span class="iconfont page" id="pagePre">&#xe600;</span>
+    <span class="iconfont page" id="pageNext">&#xe601;</span>
+  </div>
+</div>
+<script>
+  (function(){
+    var posts = JSON.parse('<%- JSON.stringify(site.posts.map((p) => { return {url:url_for(p.path), title:p.title} })) %>')
+    var pageCount = <%= config.per_page %>
+    var totalPage = Math.ceil(posts.length / pageCount)
+    var currentPage = totalPage ? 1 : 0
+
+    var preBtn = document.getElementById('pagePre')
+    var nextBtn = document.getElementById('pageNext')
+    var postList = document.getElementById('postList')
+
+    function switcher(type) {
+      return function () {
+        if (type === 'next') {
+          if (currentPage !== totalPage) currentPage++
+        } else {
+          if (currentPage !== 1) currentPage--
+        }
+
+        btnStatus()
+        updateList()
+      }
+    }
+
+    function btnStatus(type) {
+      if (currentPage === 1 || currentPage) {
+        preBtn.classList.add('disable')
+      } else {
+        preBtn.classList.remove('disable')
+      }
+
+      if (currentPage === totalPage) {
+        nextBtn.classList.add('disable')
+      } else {
+        nextBtn.classList.remove('disable')
+      }
+
+    }
+
+    function updateList() {
+      var listHtml = ''
+
+      for (var i = (currentPage - 1); i < currentPage * pageCount; i++) {
+        if (!posts[i]) break
+        listHtml += '<a class="post-item" href="' + posts[i].url + '">' + posts[i].title + '</a>'
+      }
+
+      postList.innerHTML = listHtml
+    }
+
+    preBtn.addEventListener('click', switcher('pre'), false)
+    nextBtn.addEventListener('click', switcher('next'), false)
+    updateList()
+    btnStatus()
+  }())
+</script>

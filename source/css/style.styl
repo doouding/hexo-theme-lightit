@@ -1,0 +1,121 @@
+@import "_variable"
+@import "_partials/iconfont"
+@import "_partials/animate"
+@import "_partials/highlight"
+
+body
+  margin: 0
+
+html
+  height: 100%
+
+body
+  font-family: font-zh
+  color: color-site
+  -moz-osx-font-smoothing: grayscale
+  -webkit-font-smoothing: antialiased
+  font-size: font-size
+  min-height: 100%
+  box-sizing: border-box
+  padding-bottom: bar-height
+  position: relative
+
+a
+  text-decoration: none
+  color: color-site
+
+h1, h2, h3
+  font-weight: title-weight
+  color: color-site
+  margin: 0
+
+h1
+  font-size: title-size
+
+.iconfont
+  font-family: 'iconfont'
+
+.container
+  padding-left: title-padding
+
+.societies
+  margin-top: 15px
+
+.social
+  color: color-site
+  display: inline-block
+  font-size: 20px
+  margin-right: .5em
+
+.header
+  height: bar-height
+  background-color: color-header-bg
+  font-size: bar-size
+
+  > .home.nav
+    background-color: color-home-bg
+    line-height: bar-height
+    height: bar-height
+    display: inline-block
+    width: 5em
+    padding-left: site-padding
+
+.posts
+  margin-top: 38px
+  line-height: 2em
+
+.post-item
+  font-size: 26px
+  &:hover
+    color: #698ebf
+
+.post-page
+  margin-top: .5em
+  > .page
+    display: inline-block
+    background-color: color-btn-bg
+    width: 3.2em
+    line-height: 1.6em
+    font-size: 12px
+    text-align: center
+    cursor: pointer
+    &.disable
+      background-color: color-btn-bg-highlight
+      cursor: not-allowed
+      color: #AAAAAA
+    &:hover
+      background-color: color-btn-bg-highlight
+      color: #888888
+
+.article-entry
+  margin-top: 30px
+  margin-bottom: 30px
+  font-size: article-size
+  max-width: 700px
+  & > .date
+    color: #AAA
+
+.footer
+  height: bar-height
+  background-color: color-footer-bg
+  line-height: bar-height
+  color: color-footer
+  font-size: bar-size
+  position: absolute
+  box-sizing: border-box
+  padding-left: title-padding
+  bottom: 0
+  left: 0
+  width: 100%
+  > a
+    color: color-footer
+
+h1.title
+  margin-top: 1em
+  margin-bottom: 5px
+
+h2.subtitle
+  font-size: subtitle-size
+  & > span
+    animation: 1s steps(2, start) 0s infinite blink
+    padding-right: .2em

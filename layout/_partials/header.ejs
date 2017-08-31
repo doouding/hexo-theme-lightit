@@ -1,0 +1,6 @@
+<header class="header">
+  <a class="home nav" href="<%= config.url %>">home.</a>
+  <% site.pages.forEach(function(p){ %>
+    <a class="nav" href="<%- url_for(p.path) %>"><%= p.title %></a>
+  <% }) %>
+</header>
