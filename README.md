@@ -12,5 +12,10 @@ modify site config
 
     theme: lightit 
 
-rename `_config.example.yml` to `_config.yml` and modify with your own preference
+rename `_config.example.yml` to `_config.yml` and modify with your own preference.
 
+## Copyright
+
+This theme was inspired by https://egoist.moe/.
+
+Keep `Powered by Hexo & Theme by lightit` in the footer and do whatever you want.
