@@ -13,8 +13,8 @@
     var dotBaseSpeed = 0.5
     var canvas = document.createElement('canvas')
     var ctx = canvas.getContext('2d')
-    var cHeight = document.body.scrollHeight
-    var cWidth = document.body.scrollWidth
+    var cHeight = document.body.clientHeight
+    var cWidth = document.body.clientWidth
     var bgColor = '#FAFAFA'
     var dotColor = '#EEE'
     var dotBaseRadius = 6
@@ -37,7 +37,7 @@
       var canvasStyle = {
         top: 0,
         left: 0,
-        position: 'absolute',
+        position: 'fixed',
         zIndex: -1
       }
 
