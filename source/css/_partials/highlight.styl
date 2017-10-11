@@ -36,7 +36,6 @@ $line-numbers
     color: #E46D6D
     border-radius: 3px
     padding: 0 0.3em
-    box-shadow: 0 0 1px rgba(0, 0, 0, 0.1)
   pre
     @extend $code-block
     code
@@ -49,9 +48,15 @@ $line-numbers
       border: none
       margin: 0
       padding: 0
-    table
+    table, tbody
       margin: 0
       width: auto
+      // prevent table style
+      border: none !important
+      background-color: #fff !important
+    tr:hover
+      // prevent table style
+      background-color: #fff !important
     td
       border: none
       padding: 0
