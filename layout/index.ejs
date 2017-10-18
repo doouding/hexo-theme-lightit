@@ -106,7 +106,7 @@
 </div>
 <script>
   (function(){
-    var posts = JSON.parse('<%- JSON.stringify(site.posts.map((p) => { return {url:url_for(p.path), title:p.title} })) %>')
+    var posts = JSON.parse('<%- JSON.stringify(site.posts.map((p) => { return { url: url_for(p.path), title: p.title, date: p.date.toISOString() }})) %>')
     var pageCount = <%= config.per_page %>
     var totalPage = Math.ceil(posts.length / pageCount)
     var currentPage = totalPage ? 1 : 0
@@ -115,6 +115,9 @@
     var nextBtn = document.getElementById('pageNext')
     var postList = document.getElementById('postList')
 
+    /**
+     * Change the page
+     */
     function switcher(type) {
       return function () {
         if (type === 'next') {
@@ -128,6 +131,9 @@
       }
     }
 
+    /**
+     * Update button status
+     */
     function btnStatus(type) {
       if (currentPage === 1 || currentPage) {
         preBtn.classList.add('disable')
@@ -143,6 +149,9 @@
 
     }
 
+    /**
+     * Update post list on html
+     */
     function updateList() {
       var listHtml = ''
 
@@ -154,8 +163,23 @@
       postList.innerHTML = listHtml
     }
 
+    /** 
+     * Sort post accroding to its publish date
+     */
+    function sortPosts() {
+      posts.sort((a, b) => {
+        var dateA = new Date(a.date)
+        var dateB = new Date(b.date)
+
+        if (dateA.getFullYear() !== dateB.getFullYear()) return dateA.getFullYear() < dateB.getFullYear()
+        if (dateA.getMonth() !== dateB.getMonth()) return dateA.getMonth() < dateB.getMonth()
+        if (dateA.getDate() !== dateB.getDate()) return dateA.getDate() < dateB.getDate()
+      })
+    }
+
     preBtn.addEventListener('click', switcher('pre'), false)
     nextBtn.addEventListener('click', switcher('next'), false)
+    sortPosts()
     updateList()
     btnStatus()
   }())
