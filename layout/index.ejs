@@ -157,7 +157,7 @@
 
       for (var i = (currentPage - 1); i < currentPage * pageCount; i++) {
         if (!posts[i]) break
-        listHtml += '<a class="post-item" href="' + posts[i].url + '">' + posts[i].title + '</a>'
+        listHtml += '<div><a class="post-item" href="' + posts[i].url + '">' + posts[i].title + '</a></div>'
       }
 
       postList.innerHTML = listHtml
