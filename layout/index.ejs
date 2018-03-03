@@ -109,7 +109,7 @@
     var posts = JSON.parse('<%- JSON.stringify(site.posts.map((p) => { return { url: url_for(p.path), title: p.title, date: p.date.toISOString() }})) %>')
     var pageCount = <%= config.per_page %>
     var totalPage = Math.ceil(posts.length / pageCount)
-    var currentPage = totalPage ? 1 : 0
+    var currentPage = 1
 
     var preBtn = document.getElementById('pagePre')
     var nextBtn = document.getElementById('pageNext')
@@ -135,7 +135,7 @@
      * Update button status
      */
     function btnStatus(type) {
-      if (currentPage === 1 || currentPage) {
+      if (currentPage === 1) {
         preBtn.classList.add('disable')
       } else {
         preBtn.classList.remove('disable')
@@ -155,7 +155,7 @@
     function updateList() {
       var listHtml = ''
 
-      for (var i = (currentPage - 1); i < currentPage * pageCount; i++) {
+      for (var i = (currentPage  - 1) * pageCount; i < currentPage * pageCount; i++) {
         if (!posts[i]) break
         listHtml += '<div><a class="post-item" href="' + posts[i].url + '">' + posts[i].title + '</a></div>'
       }
